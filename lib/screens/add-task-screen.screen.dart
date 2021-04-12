@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_hive_db/utilities/note-model.utilities.dart';
+import 'package:todo_hive_db/utilities/task-model.utilities.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -33,8 +34,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   void initState() {
-    super.initState();
+
     _dateController.text = DateFormat('MMM dd, yyy').format(_date);
+    super.initState();
   }
 
   @override
@@ -148,6 +150,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       task.createdAt = _date;
                       task.status = 0;
                       task.priority = _priority;
+
+                      Hive.box('tasks').add(task);
 
                       print(task);
                       Navigator.pop(context);
