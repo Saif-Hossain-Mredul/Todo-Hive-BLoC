@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:todo_hive_db/utilities/task-model.utilities.dart';
 import 'package:todo_hive_db/widgets/task-tile.widget.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 import 'add-task-screen.screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var taskBox;
+  Box taskBox;
 
   getCompletedTaskCount() {
     final allTasks = taskBox.values;
@@ -28,18 +28,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-            size: 40,
-          ),
-          onPressed: () {
-            getCompletedTaskCount();
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => AddTaskScreen()));
-          },
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 40,
         ),
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => AddTaskScreen()));
+        },
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 5),
@@ -64,12 +63,19 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: taskBox.length,
-                  itemBuilder: (context, index) {
-                    final task = taskBox.getAt(index) as Task;
+                child: ValueListenableBuilder(
+                  valueListenable: taskBox.listenable(),
+                  builder: (context, box, widget) {
+                    return ListView.builder(
+                      itemCount: box.length,
+                      itemBuilder: (context, index) {
+                        final task = box.getAt(index) as Task;
 
-                    return TaskTile(task: task,);
+                        return TaskTile(
+                          task: task,
+                        );
+                      },
+                    );
                   },
                 ),
               )
@@ -80,4 +86,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
