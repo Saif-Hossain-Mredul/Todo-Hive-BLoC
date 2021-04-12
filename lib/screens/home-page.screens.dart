@@ -36,7 +36,8 @@ class _HomePageState extends State<HomePage> {
         ),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddTaskScreen()));
+              context, MaterialPageRoute(builder: (_) => AddTaskScreen()),
+          );
         },
       ),
       body: SafeArea(
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
 
                         return TaskTile(
                           task: task,
+                          index: index,
                         );
                       },
                     );

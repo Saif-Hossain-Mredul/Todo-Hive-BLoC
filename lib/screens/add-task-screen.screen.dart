@@ -34,7 +34,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   void initState() {
-
     _dateController.text = DateFormat('MMM dd, yyy').format(_date);
     super.initState();
   }
