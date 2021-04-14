@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_hive_db/BLoC/database_bloc.dart';
 import 'package:todo_hive_db/utilities/task-model.utilities.dart';
 
 class TaskTile extends StatelessWidget {
@@ -12,6 +13,8 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _databaseBloc = BlocProvider.of<DatabaseBloc>(context);
+
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
       secondaryActions: <Widget>[
@@ -20,7 +23,7 @@ class TaskTile extends StatelessWidget {
           color: Colors.red,
           icon: Icons.delete,
           onTap: () {
-            Hive.box('tasks').deleteAt(index);
+            _databaseBloc.add(DeleteEvent(index: index));
           },
         ),
       ],
@@ -43,7 +46,7 @@ class TaskTile extends StatelessWidget {
           value: task.status == 1 ? true : false,
           onChanged: (newVal) {
             task.status = newVal ? 1 : 0;
-            Hive.box('tasks').putAt(index, task);
+            _databaseBloc.add(UpdateEvent(index: index, task: task));
           },
         ),
       ),

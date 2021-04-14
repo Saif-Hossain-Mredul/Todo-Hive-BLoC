@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                   : Center(
                       child: Icon(
                         Icons.list_alt,
-                        color: Colors.deepOrange,
+                        color: Colors.deepPurple,
                         size: 80,
                       ),
                     );
