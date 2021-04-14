@@ -1,7 +1,8 @@
 part of 'database_bloc.dart';
 
-abstract class DatabaseEvent{
-}
+abstract class DatabaseEvent {}
+
+class InitEvent extends DatabaseEvent {}
 
 class InsertEvent extends DatabaseEvent {
   final Task task;
@@ -11,12 +12,13 @@ class InsertEvent extends DatabaseEvent {
 
 class UpdateEvent extends DatabaseEvent {
   final Task task;
+  final int index;
 
-  UpdateEvent({@required this.task});
+  UpdateEvent({@required this.task, @required this.index});
 }
 
 class DeleteEvent extends DatabaseEvent {
-  final Task task;
+  final int index;
 
-  DeleteEvent({@required this.task});
+  DeleteEvent({@required this.index});
 }

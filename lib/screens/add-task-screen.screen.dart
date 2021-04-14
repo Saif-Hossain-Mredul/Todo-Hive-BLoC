@@ -151,10 +151,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       task.priority = _priority;
 
                       Hive.box('tasks').add(task);
-
-                      print(Hive.box('tasks'));
-
-                      print(task);
                       Navigator.pop(context);
                     },
                     child: Container(

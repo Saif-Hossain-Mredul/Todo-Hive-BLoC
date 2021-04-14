@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           size: 40,
         ),
         onPressed: () {
+          print(taskBox.values.toList());
           Navigator.push(
             context,
             CupertinoPageRoute(builder: (_) => AddTaskScreen()),

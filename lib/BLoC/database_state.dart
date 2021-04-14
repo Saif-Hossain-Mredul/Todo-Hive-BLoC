@@ -6,4 +6,8 @@ class DatabaseInitial extends DatabaseState {}
 
 class DatabaseLoading extends DatabaseState {}
 
-class DatabaseLoaded extends DatabaseState {}
+class DatabaseLoaded extends DatabaseState {
+  List<Task> taskList;
+
+  DatabaseLoaded({this.taskList});
+}
