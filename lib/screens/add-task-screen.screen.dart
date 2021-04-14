@@ -154,7 +154,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       task.status = 0;
                       task.priority = _priority;
 
-                      Hive.box('tasks').add(task);
+                      _databaseBloc.add(InsertEvent(task: task));
                       Navigator.pop(context);
                     },
                     child: Container(

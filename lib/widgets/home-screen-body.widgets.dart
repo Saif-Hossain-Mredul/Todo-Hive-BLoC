@@ -1,33 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
-import 'package:todo_hive_db/utilities/task-model.utilities.dart';
 import 'package:todo_hive_db/widgets/task-tile.widget.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-class HomeScreenBody extends StatefulWidget {
-  @override
-  _HomeScreenBodyState createState() => _HomeScreenBodyState();
-}
+class HomeScreenBody extends StatelessWidget {
+  final List taskList;
+  HomeScreenBody({@required this.taskList});
 
-class _HomeScreenBodyState extends State<HomeScreenBody> {
-  Box taskBox;
-
-  getCompletedTaskCount() {
-    final allTasks = taskBox.values;
-    return allTasks.where((task) => task.status == 1).toList().length;
-  }
-
-  @override
-  void initState() {
-    taskBox  = Hive.box('tasks');
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    taskBox.close();
-    super.dispose();
-  }
+  getCompletedTaskCount(List tasks) {
+    return tasks.where((task) => task.status == 1).toList().length;
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -47,24 +27,16 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 25),
           child: Text(
-            '${getCompletedTaskCount()} of ${taskBox.length}',
+            '${getCompletedTaskCount(taskList)} of ${taskList.length}',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
           ),
         ),
         Expanded(
-          child: ValueListenableBuilder(
-            valueListenable: taskBox.listenable(),
-            builder: (context, box, widget) {
-              return ListView.builder(
-                itemCount: box.length,
-                itemBuilder: (context, index) {
-                  final task = box.getAt(index) as Task;
-
-                  return TaskTile(
-                    task: task,
-                    index: index,
-                  );
-                },
+          child: ListView.builder(
+            itemCount: taskList.length,
+            itemBuilder: (context, index) {
+              return TaskTile(
+                task: taskList[index],
               );
             },
           ),
