@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:todo_hive_db/BLoC/database_bloc.dart';
 import 'package:todo_hive_db/widgets/home-screen-body.widgets.dart';
 
 import 'add-task-screen.screen.dart';
@@ -27,6 +29,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _databaseBloc = BlocProvider.of<DatabaseBloc>(context);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(
@@ -38,7 +42,12 @@ class _HomePageState extends State<HomePage> {
           print(taskBox.values.toList());
           Navigator.push(
             context,
-            CupertinoPageRoute(builder: (_) => AddTaskScreen()),
+            CupertinoPageRoute(
+              builder: (_) => BlocProvider.value(
+                value: _databaseBloc,
+                child: AddTaskScreen(),
+              ),
+            ),
           );
         },
       ),

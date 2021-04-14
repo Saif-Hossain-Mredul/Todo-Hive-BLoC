@@ -15,10 +15,9 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   Stream<DatabaseState> mapEventToState(
     DatabaseEvent event,
   ) async* {
-    final taskbox = Hive.box('lazy_tasks');
+    final taskbox = Hive.box('tasks');
 
     if (event is InitEvent) {
-      yield DatabaseLoading();
       final tasks = taskbox.values.toList();
       yield DatabaseLoaded(taskList: tasks);
     } else if (event is InsertEvent) {

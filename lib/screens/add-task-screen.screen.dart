@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_hive_db/BLoC/database_bloc.dart';
 import 'package:todo_hive_db/utilities/task-model.utilities.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -40,6 +42,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _databaseBloc = BlocProvider.of<DatabaseBloc>(context);
+    
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
