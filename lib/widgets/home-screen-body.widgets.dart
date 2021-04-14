@@ -7,7 +7,7 @@ class HomeScreenBody extends StatelessWidget {
 
   getCompletedTaskCount(List tasks) {
     return tasks.where((task) => task.status == 1).toList().length;
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
