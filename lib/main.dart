@@ -30,11 +30,11 @@ class MyApp extends StatelessWidget {
           return snapshot.connectionState == ConnectionState.done
               ? HomePage()
               : Scaffold(
-                  backgroundColor: Colors.deepPurple,
+                  backgroundColor: Colors.white,
                   body: Center(
                     child: Icon(
                       Icons.list_alt,
-                      color: Colors.white,
+                      color: Colors.purple,
                       size: 80,
                     ),
                   ),

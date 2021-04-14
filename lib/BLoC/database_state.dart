@@ -1,10 +1,9 @@
 part of 'database_bloc.dart';
 
-abstract class DatabaseState extends Equatable {
-  const DatabaseState();
-}
+abstract class DatabaseState {}
 
-class DatabaseInitial extends DatabaseState {
-  @override
-  List<Object> get props => [];
-}
+class DatabaseInitial extends DatabaseState {}
+
+class DatabaseLoading extends DatabaseState {}
+
+class DatabaseLoaded extends DatabaseState {}
