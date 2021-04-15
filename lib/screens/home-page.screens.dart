@@ -31,23 +31,23 @@ class HomePage extends StatelessWidget {
         },
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(left: 5, right: 5, top: 60, bottom: 5),
-          child: BlocBuilder<DatabaseBloc, DatabaseState>(
-            builder: (context, state) {
-              return state is DatabaseLoaded
-                  ? HomeScreenBody(
+        child: BlocBuilder<DatabaseBloc, DatabaseState>(
+          builder: (context, state) {
+            return state is DatabaseLoaded
+                ? Padding(
+                    padding: EdgeInsets.only(top: 60, bottom: 5),
+                    child: HomeScreenBody(
                       taskList: state.taskList,
-                    )
-                  : Center(
-                      child: Icon(
-                        Icons.list_alt,
-                        color: Colors.deepPurple,
-                        size: 80,
-                      ),
-                    );
-            },
-          ),
+                    ),
+                  )
+                : Center(
+                    child: Icon(
+                      Icons.list_alt,
+                      color: Colors.deepPurple,
+                      size: 80,
+                    ),
+                  );
+          },
         ),
       ),
     );

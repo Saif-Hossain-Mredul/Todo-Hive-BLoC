@@ -40,11 +40,13 @@ class MyApp extends StatelessWidget {
                 ? HomePage()
                 : Scaffold(
                     backgroundColor: Colors.white,
-                    body: Center(
-                      child: Icon(
-                        Icons.list_alt,
-                        color: Colors.purple,
-                        size: 80,
+                    body: SafeArea(
+                      child: Center(
+                        child: Icon(
+                          Icons.list_alt,
+                          color: Colors.deepPurple,
+                          size: 80,
+                        ),
                       ),
                     ),
                   );
