@@ -16,6 +16,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   DateTime _date = DateTime.now();
   TextEditingController _dateController = TextEditingController();
   final List<String> _priorities = ['Low', 'Medium', 'High'];
+  final globalKey = GlobalKey<ScaffoldState>();
 
   _handleDatePicker() async {
     final DateTime date = await showDatePicker(
@@ -43,10 +44,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final _databaseBloc = BlocProvider.of<DatabaseBloc>(context);
-    
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        key: globalKey,
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
@@ -76,6 +78,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   TextFormField(
                     onChanged: (value) {
+                      print(value);
                       setState(() {
                         _title = value;
                       });
@@ -87,9 +90,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                     ),
-                    validator: (input) => input.trim().isEmpty
-                        ? 'Please enter a task title'
-                        : null,
                   ),
                   SizedBox(
                     height: 20,
@@ -147,15 +147,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Task task = Task();
+                      if (_title == null || _title.trim().isEmpty) {
+                        final snackBar = SnackBar(
+                          content: Text('Please set a task title'),
+                        );
 
-                      task.title = _title;
-                      task.createdAt = _date;
-                      task.status = 0;
-                      task.priority = _priority;
+                        globalKey.currentState.showSnackBar(snackBar);
+                      } else {
+                        Task task = Task();
 
-                      _databaseBloc.add(InsertEvent(task: task));
-                      Navigator.pop(context);
+                        task.title = _title;
+                        task.createdAt = _date;
+                        task.status = 0;
+                        task.priority = _priority;
+                        _databaseBloc.add(InsertEvent(task: task));
+                        Navigator.pop(context);
+                      }
                     },
                     child: Container(
                       width: double.infinity,
