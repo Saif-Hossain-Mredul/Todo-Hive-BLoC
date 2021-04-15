@@ -15,6 +15,7 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   Stream<DatabaseState> mapEventToState(
     DatabaseEvent event,
   ) async* {
+    await Hive.openBox('tasks');
     final taskbox = Hive.box('tasks');
 
     if (event is InitEvent) {

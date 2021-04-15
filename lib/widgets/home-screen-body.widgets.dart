@@ -37,6 +37,7 @@ class HomeScreenBody extends StatelessWidget {
             itemBuilder: (context, index) {
               return TaskTile(
                 task: taskList[index],
+                index: index,
               );
             },
           ),

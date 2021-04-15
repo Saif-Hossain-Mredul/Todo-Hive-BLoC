@@ -40,7 +40,8 @@ class TaskTile extends StatelessWidget {
           style: TextStyle(
               decoration: task.status == 1
                   ? TextDecoration.lineThrough
-                  : TextDecoration.none),
+                  : TextDecoration.none,
+                  ),
         ),
         trailing: Checkbox(
           value: task.status == 1 ? true : false,
