@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_hive_db/BLoC/database_bloc.dart';
 import 'package:todo_hive_db/utilities/task-model.utilities.dart';
@@ -43,8 +42,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _databaseBloc = BlocProvider.of<DatabaseBloc>(context);
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -78,7 +75,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                   TextFormField(
                     onChanged: (value) {
-                      print(value);
                       setState(() {
                         _title = value;
                       });
@@ -160,7 +156,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         task.createdAt = _date;
                         task.status = 0;
                         task.priority = _priority;
-                        _databaseBloc.add(InsertEvent(task: task));
+                        BlocProvider.of<DatabaseBloc>(context)
+                            .add(InsertEvent(task: task));
                         Navigator.pop(context);
                       }
                     },
